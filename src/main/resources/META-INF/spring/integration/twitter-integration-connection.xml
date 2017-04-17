@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-twitter="http://www.springframework.org/schema/integration/twitter"
+	xmlns:int-mongodb="http://www.springframework.org/schema/integration/mongodb"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+						http://www.springframework.org/schema/integration/twitter http://www.springframework.org/schema/integration/twitter/spring-integration-twitter.xsd
+						http://www.springframework.org/schema/integration/mongodb http://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd
+						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+
+	<!-- Step 1: Configure a Twitter Inbound -->
+
+	<bean id="twitterTemplate"
+		class="org.springframework.social.twitter.api.impl.TwitterTemplate">
+		<constructor-arg value="${twitter.oauth.consumerKey}" />
+		<constructor-arg value="${twitter.oauth.consumerSecret}" />
+		<constructor-arg value="${twitter.oauth.accessToken}" />
+		<constructor-arg value="${twitter.oauth.accessTokenSecret}" />
+	</bean>
+
+	<int-twitter:search-inbound-channel-adapter
+		id="searchAdapter" 
+		channel="sourceExtractor" 
+		query="${twitter.search.query}"
+		twitter-template="twitterTemplate">
+		<int:poller fixed-rate="3000" max-messages-per-poll="5" />
+	</int-twitter:search-inbound-channel-adapter>
+	
+	<int:logging-channel-adapter id="sourceExtractor" level="INFO"/>
+	
+	<!-- Step 2: Create a new Inbound to get Geo data -->
+
+	<!-- Step 3: Tranform to JSON -->
+		
+	<!-- Step 4: Mongo Ingestion -->
+	
+
+</beans>
