@@ -1,9 +1,6 @@
-# BTS - Stream Data Ingestion Workshop
-
-This is an exemple for the hands on session for SIGLibre.
+# BTS - Stream Data Ingestion 
 
 We will create together a project in Spring integration framework to collect GEO data from twitter API and feed a MongoDB.
-
 
 ### Set Up your development environment
 
@@ -243,7 +240,6 @@ id="mongodbOutChannel"
 collection-name="${mongodb.collection}"
 mongodb-factory="mongoDbFactory" />
 ```
-
 Configure the Mongo credentials:
 
 	# Mongo Credentials <PUT YOUR CREDENTIALS>
@@ -262,7 +258,7 @@ Check data loading in MongoDB
 
 ### Extra Task
 
-- Modify this project tget data from files:
+- Modify this project get data from files:
 
 - Download this dataset (All Tweets in Catalunya on 2014 [6GB])
 	
